@@ -115,6 +115,42 @@ normal parsing. Using a compressor that supports random-access on the
 JSON file further speedups are possible thanks to the reduced I/O. See
 the source code of `json_select` for the details.
 
+How it works
+------------
+
+Semi-indexing is a technique that can be applied to most text
+serialization formats (such as XML). The generic scheme is described
+in full detail in the paper. Here we give a simple explanation of how
+it works when applied to JSON.
+
+The JSON semi-index consists of two binary strings, `pos` and
+`bp`, which encode respectively the positions of the structural
+elements of JSON (i.e. `{}[]:,`) and the structure of the parsing
+tree, encoded as a sequence of balanced parentheses.
+
+        {"a": 1, "b": {"l": [1, null], "v": true}}
+    pos 110000100100001100001100100000010000100000
+    bp  (()()()(()(()())()()))
+
+Note that each `1` in the `pos` string is associated to two
+consecutive parentheses in the `bp` string.
+
+One property of `pos` is that it is very sparse, because usually keys
+and values are at least a few characters long, hence it is very
+compressible. Using an Elias-Fano encoding, a space close to the
+information-theoretical optimum can be reached while allowing
+efficient random-access and powerful operations such as `select`,
+which gives the position of the `i`-th `1` bit in the string.
+
+On the other hand `bp`, which is very small (it is twice as long as
+the number of ones in `pos`) can be augmented with data structures
+that enable quick tree-like navigation. This structure take only a
+negligible amount of space compared to the string. 
+
+Navigation in the JSON object is performed by navigating the tree
+represented by `bp` and then retrieving the key/values from the JSON
+document by pointing to the the positions obtained from `pos`.
+
 How to build the code
 ---------------------
 

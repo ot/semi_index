@@ -174,7 +174,7 @@ been tested also on Mac OS X and Windows 7.
 The code has been tested only on x86-64. Compiling it on 32bit
 architectures would probably require some work.
 
-### Building ###
+### Building on Unix ###
 
 The project uses CMake. To build it on Unix systems it should be
 sufficient to do the following:

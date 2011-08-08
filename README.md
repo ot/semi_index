@@ -58,7 +58,7 @@ Wikipedia edits log.
 If we want to extract the attributes `logtitle` and `contributor.id`
 from attribute we can use the following command:
 
-    ./json_select naive_parse_stream logtitle,contributor.id < example.json | head -3
+    $ ./json_select naive_parse_stream logtitle,contributor.id < example.json | head -3
     ["Vivian Blaine",56299]
     ["File:Mini Christmas tree.png",26675]
     ["Daniel Li",56299]

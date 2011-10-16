@@ -133,7 +133,7 @@ int main(int argc, char** argv)
 
     {
         semi_index::json_semi_index index(json_strings);
-	size_t index_size = mapper::size_of(index);
+	size_t index_size = succinct::mapper::size_of(index);
 
         size_t total_json = 0;
         BOOST_FOREACH(std::string const& json, json_strings) {
@@ -144,7 +144,7 @@ int main(int argc, char** argv)
 		  << " json_semi_index overhead: " << (double)index_size / total_json
                   << std::endl;
 
-        mapper::size_tree_of(index, "json_semi_index")->dump();
+        succinct::mapper::size_tree_of(index, "json_semi_index")->dump();
 
         TIMEIT("Accessing elements with json_semi_index:", runs * json_strings.size()) {
             for (size_t i = 0; i < runs; ++i) {

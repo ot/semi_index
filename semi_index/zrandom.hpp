@@ -117,7 +117,7 @@ namespace zrandom {
         uint64_t m_original_size;
         uint64_t m_compressed_size;
         uint64_t m_block_size;
-        mapper::mappable_vector<uint64_t> m_offsets;
+        succinct::mapper::mappable_vector<uint64_t> m_offsets;
 
 	class cache;
 	std::auto_ptr<cache> m_cache;

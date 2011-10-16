@@ -106,15 +106,15 @@ void si_save(const char* index_file)
 {
     using succinct::util::lines;
     json_semi_index index(lines(stdin));
-    mapper::size_tree_of(index)->dump();
-    mapper::freeze(index, index_file);
+    succinct::mapper::size_tree_of(index)->dump();
+    succinct::mapper::freeze(index, index_file);
 }
 
 void saved_si_parse_stream(const char* index_file, const char* paths_spec)
 {
     json_semi_index index;
     boost::iostreams::mapped_file_source m(index_file);
-    mapper::map(index, m);
+    succinct::mapper::map(index, m);
     json_semi_index::cursor cursor = index.get_cursor();
 
     path_list_t paths = json::path::parse(paths_spec);
@@ -152,7 +152,7 @@ void saved_si_parse_mapped(const char* json_file, const char* index_file, const 
 
     json_semi_index index;
     boost::iostreams::mapped_file_source m(index_file);
-    mapper::map(index, m, mapper::map_flags::warmup);
+    succinct::mapper::map(index, m, succinct::mapper::map_flags::warmup);
     json_semi_index::cursor cursor = index.get_cursor();
 
     path_list_t paths = json::path::parse(paths_spec);
@@ -191,7 +191,7 @@ void saved_si_parse_compressed(const char* json_compressed_file, const char* ind
     typedef semi_index::json_semi_index_base<zrandom::decompressor::iterator> json_semi_index_z;
     json_semi_index_z index;
     boost::iostreams::mapped_file_source m(index_file);
-    mapper::map(index, m);
+    succinct::mapper::map(index, m);
     json_semi_index_z::cursor cursor = index.get_cursor();
 
     path_list_t paths = json::path::parse(paths_spec);

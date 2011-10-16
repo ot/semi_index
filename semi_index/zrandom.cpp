@@ -62,11 +62,11 @@ namespace zrandom {
 
         deflateEnd(&strm);
 
-        mapper::mappable_vector<uint64_t> out_checkpoints;
+        succinct::mapper::mappable_vector<uint64_t> out_checkpoints;
         out_checkpoints.steal(checkpoints);
-        mapper::freeze(original_size, fout);
-        mapper::freeze(block_size, fout);
-        mapper::freeze(out_checkpoints, fout);
+        succinct::mapper::freeze(original_size, fout);
+        succinct::mapper::freeze(block_size, fout);
+        succinct::mapper::freeze(out_checkpoints, fout);
         
         fout.seekp(0);
         fout.write(reinterpret_cast<const char*>(&compressed_size), 
@@ -134,9 +134,9 @@ namespace zrandom {
         data += sizeof(m_compressed_size);
         m_compressed_data = data;
         data += m_compressed_size;
-        data += mapper::map(m_original_size, data);
-        data += mapper::map(m_block_size, data);
-        data += mapper::map(m_offsets, data, mapper::map_flags::warmup);
+        data += succinct::mapper::map(m_original_size, data);
+        data += succinct::mapper::map(m_block_size, data);
+        data += succinct::mapper::map(m_offsets, data, succinct::mapper::map_flags::warmup);
     }
     
     decompressor::~decompressor() 

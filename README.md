@@ -97,7 +97,7 @@ For this very low density file the semi-index is negligibly small,
 compared to the raw collection:
 
     2.8G	wp_history.json
-    9.6M	wp_history.json.si
+    9.7M	wp_history.json.si
 
 For more typical file, the overhead is around 10%.
 
@@ -106,9 +106,9 @@ of the semi-index.
 
     $ sudo ./drop_caches.sh && time ./json_select saved_si_parse_mapped wp_history.json wp_history.json.si id,title,revision[-1].timestamp > /dev/null
 
-    real	0m11.689s
-    user	0m0.070s
-    sys	0m0.330s
+    real	0m11.282s
+    user	0m0.030s
+    sys 	0m0.380s
 
 Using the semi-index, the extraction is almost 6 times faster than
 normal parsing. Using a compressor that supports random-access on the
@@ -162,6 +162,13 @@ The following dependencies have to be installed to compile the library.
 * zlib
 * Boost >= 1.42
 
+Also, the library `succinct` has to be downloaded as a git submodule,
+so the following two commands have to be executed *before running
+cmake*:
+
+    $ git submodule init
+    $ git submodule update
+
 `json_select` and the performance tests also depend on MongoDB and
 JsonCpp, but their sources are included in the source tree so they
 don't need to be installed.
@@ -179,7 +186,7 @@ architectures would probably require some work.
 The project uses CMake. To build it on Unix systems it should be
 sufficient to do the following:
 
-    $ cmake .
+    $ cmake . -DCMAKE_BUILD_TYPE=Release
     $ make
 
 It is also advised to perform a `make test`, which runs the unit tests.
@@ -195,13 +202,13 @@ system to find them.
 * For zlib `CMAKE_PREFIX_PATH` must be set to the directory that
   contains `zlib.h`
 * Both the directories that contain the Boost and zlib DLLs must be
-  added to `PATH` for the executables to find them
+  added to `PATH` so that the executables find them
 
 Once the env variables are set, the quickest way to build the code is
 by using NMake (instead of the default Visual Studio). Run the
 following commands in a Visual Studio x64 Command Prompt:
 
-    $ cmake -G "NMake Makefiles" .
+    $ cmake -G "NMake Makefiles" -DCMAKE_BUILD_TYPE=Release .
     $ nmake
     $ nmake test
 

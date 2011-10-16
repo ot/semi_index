@@ -33,7 +33,6 @@ add_subdirectory(3rd_party)
 # add the root directory to include path to make includes absolute
 include_directories(${SEMI_INDEX_SOURCE_DIR})
 # succinct subdirectory
-add_definitions(-DSUCCINCT_USE_INTRINSICS)
 add_subdirectory(succinct)
 # semi_index subdirectory
 add_subdirectory(semi_index)

@@ -1,8 +1,8 @@
 semi_index
 ==========
 
-This library implements the algorithm described in *Semi-Indexing
-Semi-Structured Data in Tiny Space*.
+This library implements the algorithm described in [*Semi-Indexing
+Semi-Structured Data in Tiny Space*](http://www.di.unipi.it/~ottavian/files/semi_index_cikm.pdf).
 
 The aim is to speed-up the processing of large collections of JSON
 documents when only a small subset of the values in each document is

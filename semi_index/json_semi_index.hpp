@@ -89,8 +89,8 @@ namespace semi_index {
 		}
             }
 	    
-            succinct::elias_fano(&nav).swap(m_nav);
-            succinct::bp_vector(&bp, true, false).swap(m_bp);
+            succinct::elias_fano(&nav, false).swap(m_nav);
+            succinct::bp_vector(&bp, false, false).swap(m_bp);
         }
         
         template <typename Visitor>
